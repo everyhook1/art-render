@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head> </head>
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r120/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three-addons@1.2.0/build/three-addons.min.js"></script>
+    <script>
+      const loader = new THREE_ADDONS.DDSLoader();
+      loader.load("loading_screens/datem1.dds", (texture) => {
+        texture.wrapT = THREE.RepeatWrapping;
+        texture.repeat.set(1, -1);
+        texture.needsUpdate = true;
+
+        var renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(texture.image.width, texture.image.height);
+
+        var scene = new THREE.Scene();
+        scene.background = texture;
+
+        renderer.render(scene, new THREE.PerspectiveCamera());
+        const url = renderer.domElement.toDataURL();
+
+        const img = document.createElement("img");
+        img.src = url;
+        document.body.appendChild(img);
+      });
+    </script>
+  </body>
+</html>
